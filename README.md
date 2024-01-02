@@ -1,5 +1,7 @@
 # <img align="left" width="40" height="40" alt="GoodRequest, s.r.o." src="./favicon.png">Backup Buddy
 
+[![dockeri.co](https://dockerico.blankenship.io/image/goodrequestcom/backup-buddy)](https://hub.docker.com/r/goodrequestcom/backup-buddy)
+
 ### _Simple Bash app for backing up your precious data made with love 🫶_
 
 ___ 
