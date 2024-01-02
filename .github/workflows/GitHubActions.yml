@@ -11,6 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          docker build -t ${{ secrets.DOCKERHUB_REPOSITORY_NAME }}/safe:${{ github.ref_name }} -f ./Dockerfile .
+          docker build -t ${{ secrets.DOCKERHUB_REPOSITORY_NAME }}/backup-buddy:${{ github.ref_name }} -f ./Dockerfile .
           docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_PASSWORD_TOKEN }}
-          docker push ${{ secrets.DOCKERHUB_REPOSITORY_NAME }}/safe:${{ github.ref_name }}
+          docker push ${{ secrets.DOCKERHUB_REPOSITORY_NAME }}/backup-buddy:${{ github.ref_name }}
