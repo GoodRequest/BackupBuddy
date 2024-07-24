@@ -14,7 +14,7 @@ DUMP_FILE_NAME="db_$FILE_TIMESTAMP.gz"
 [[ -n "$DEBUG_LOGGING" ]] && echo "[DEBUG] $(date -u +'%Y-%m-%dT%H:%M:%SZ') Dump file name: $DUMP_FILE_NAME"
 
 # Create database dump
-mysqldump -h "$HOST" -u "$USER" "$DATABASE" --result-file="./database_dump_$FILE_TIMESTAMP.sql" --ssl-mode=disabled
+mysqldump -h "$HOST" -P "$PORT" -u "$USER" "$DATABASE" --result-file="./database_dump_$FILE_TIMESTAMP.sql" --ssl-mode=disabled
 
 # Compress into .gz format
 gzip -c9 "database_dump_$FILE_TIMESTAMP.sql" > "$DUMP_FILE_NAME"
