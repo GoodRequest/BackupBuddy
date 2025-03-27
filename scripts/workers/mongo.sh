@@ -13,8 +13,23 @@ DUMP_FILE_NAME="db_$FILE_TIMESTAMP.tar.gz"
 
 [[ -n "$DEBUG_LOGGING" ]] && echo "[DEBUG] $(date -u +'%Y-%m-%dT%H:%M:%SZ') Dump file name: $DUMP_FILE_NAME"
 
+# Set PATH for current execution
+export PATH="/mongodb-linux-x86_64-ubuntu1604-3.4.17/bin:$PATH"
+
+# Check if mongodump is available
+if ! command -v mongodump &>/dev/null; then
+    echo "[ERROR] mongodump command not found!"
+    exit 1
+fi
+
 # Create database dump with archive option and compress to .tar.gz
 mongodump --host="$HOST" --username="$USER" --password="$PASSWORD" --db="$DATABASE" --out=./
+
+# Check if mongodump succeeded
+if [ $? -ne 0 ]; then
+    echo "[ERROR] MongoDB dump failed!"
+    exit 1
+fi
 
 # Compress file
 tar -czf "$DUMP_FILE_NAME" "$DATABASE"

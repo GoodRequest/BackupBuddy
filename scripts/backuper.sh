@@ -26,15 +26,15 @@ mongo_backup() {
 
     # Preparation of Mongo database installation
     apt-get update && apt-get install -y gnupg wget
-    wget -qO - https://www.mongodb.org/static/pgp/server-7.0.asc | apt-key add -
 
     # apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
     # printf "deb http://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" >> /etc/apt/sources.list.d/mongodb-org-7.0.list
-    curl -fsSL https://pgp.mongodb.com/server-7.0.asc | gpg --dearmor -o /usr/share/keyrings/mongodb-server-7.0.gpg
-    echo "deb [signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg] http://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-7.0.list
 
-    # Installation of Mongo database engine
-    apt-get update && apt-get install -y mongodb-org
+    wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-3.4.17.tgz
+    tar -xvzf mongodb-linux-x86_64-ubuntu1604-3.4.17.tgz
+
+    wget http://security.ubuntu.com/ubuntu/pool/main/o/openssl1.0/libssl1.0.0_1.0.2n-1ubuntu5_amd64.deb
+    dpkg -i libssl1.0.0_1.0.2n-1ubuntu5_amd64.deb
 
     # Create crontab definition, ENV variable CRON_RULE must be defined
     printf "$CRON_RULE root /bin/bash /scripts/workers/mongo.sh >> $LOG_DIR/mongo.log 2>&1\n\n" > /etc/cron.d/crontab
