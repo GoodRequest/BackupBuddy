@@ -29,7 +29,9 @@ mongo_backup() {
     wget -qO - https://www.mongodb.org/static/pgp/server-7.0.asc | apt-key add -
 
     # apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
-    printf "deb http://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" >> /etc/apt/sources.list.d/mongodb-org-7.0.list
+    # printf "deb http://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" >> /etc/apt/sources.list.d/mongodb-org-7.0.list
+    curl -fsSL https://pgp.mongodb.com/server-7.0.asc | gpg --dearmor -o /usr/share/keyrings/mongodb-server-7.0.gpg
+    echo "deb [signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg] http://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-7.0.list
 
     # Installation of Mongo database engine
     apt-get update && apt-get install -y mongodb-org
@@ -121,7 +123,7 @@ setup_aws_cli() {
     export DEBIAN_FRONTEND=noninteractive
 
     # Installation of AWS CLI
-    apt-get update && apt-get install -y awscli
+    snap install aws-cli --classic
 
     # Unset variable
     unset DEBIAN_FRONTEND
