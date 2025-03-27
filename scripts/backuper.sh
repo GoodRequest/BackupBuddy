@@ -122,8 +122,15 @@ setup_aws_cli() {
     # Avoid prompts while installing
     export DEBIAN_FRONTEND=noninteractive
 
-    # Installation of AWS CLI
-    snap install aws-cli --classic
+    # Download and install AWS CLI
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    unzip awscliv2.zip
+    ./aws/install
+    rm -rf awscliv2.zip aws
+
+    # Ensure AWS CLI is in PATH
+    echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bashrc
+    source ~/.bashrc
 
     # Unset variable
     unset DEBIAN_FRONTEND
